@@ -5,3 +5,18 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+3.times do
+  User.create(
+    email: Faker::Internet.email,
+    password: "Password1!"
+  )
+end
+
+10.times do
+  Ticket.create(
+    subject: Faker::Lorem.sentence,
+    description: Faker::Lorem.paragraph,
+    user_id: User.all.sample.id
+  )
+end
