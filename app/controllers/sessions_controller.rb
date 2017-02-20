@@ -7,6 +7,10 @@ class SessionsController < ApplicationController
     render json: access_token
   end
 
+  def show
+    render json: session_manager.session
+  end
+
   private
 
   def session_params

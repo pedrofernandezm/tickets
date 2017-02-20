@@ -17,6 +17,8 @@ class ApplicationController < ActionController::API
   def authenticate_token!
     unless authorization_token.present? && session_manager.valid?
       render_unauthorized
+    else
+      session_manager.refresh!
     end
   end
 

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :sessions
+  resources :sessions, only: [:create, :show, :destroy]
   resources :tickets
   resources :users
 end
