@@ -7,7 +7,7 @@ class SessionManager
   end
 
   def valid?
-    token_valid? && session && session_current?
+    valid_token? && session && not_expired_session?
   end
 
   def create!(params)
@@ -33,18 +33,18 @@ class SessionManager
 
   def session
     @session ||= Session.find_by(
-      user_id: payload["sub"],
-      jti: payload["jti"]
+      user_id: payload["user_id"],
+      token: payload["token"]
     )
   end
 
   private
 
-  def token_valid?
+  def valid_token?
     Token.verify!(auth_token)
   end
 
-  def session_current?
+  def not_expired_session?
     session.expires_at > Time.now.utc
   end
 

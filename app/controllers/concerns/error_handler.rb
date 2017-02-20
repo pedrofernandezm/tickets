@@ -13,13 +13,17 @@ module ErrorHandler
 
   end
 
+  def render_unauthorized
+    render_error(:unauthorized, 401, "Unauthorized")
+  end
+
   private
 
   def render_error(error, status, message)
     response = [
       {
         code: error,
-        title: message,
+        detail: message,
         status: status.to_s
       }
     ]
