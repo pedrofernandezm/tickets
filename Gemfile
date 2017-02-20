@@ -5,14 +5,13 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
-gem 'rails', '~> 5.0.1'
-gem 'mysql2', '~> 0.4.5'
-gem 'puma', '~> 3.0'
 gem 'active_model_serializers', '~> 0.10.4'
 gem 'bcrypt', '~> 3.1.7'
-gem 'jwt', '~> 1.5.6'
 gem 'jsonapi-serializers', '~> 0.16.1'
+gem 'jwt', '~> 1.5.6'
+gem 'mysql2', '~> 0.4.5'
+gem 'puma', '~> 3.0'
+gem 'rails', '~> 5.0.1'
 
 # gem 'rack-cors'
 

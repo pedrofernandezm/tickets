@@ -4,6 +4,7 @@ class CreateSessions < ActiveRecord::Migration[5.0]
       t.integer :user_id
       t.string :token
       t.datetime :expires_at
+      t.string :uuid
 
       t.timestamps
     end

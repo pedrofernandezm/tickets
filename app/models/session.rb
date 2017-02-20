@@ -3,6 +3,7 @@ class Session < ApplicationRecord
   DURATION_SECONDS = 1200
 
   has_secure_token :token
+  has_secure_token :uuid
 
   belongs_to :user
 

@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20170219063206) do
     t.integer  "user_id"
     t.string   "token"
     t.datetime "expires_at"
+    t.string   "uuid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -24,6 +25,7 @@ ActiveRecord::Schema.define(version: 20170219063206) do
     t.string   "subject"
     t.text     "description", limit: 65535
     t.integer  "user_id"
+    t.string   "uuid"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
@@ -31,6 +33,7 @@ ActiveRecord::Schema.define(version: 20170219063206) do
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
     t.string   "password_digest"
+    t.string   "uuid"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
