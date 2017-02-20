@@ -7,13 +7,12 @@ end
 
 
 gem 'rails', '~> 5.0.1'
-gem 'mysql2'
+gem 'mysql2', '~> 0.4.5'
 gem 'puma', '~> 3.0'
-gem 'knock'
-gem 'active_model_serializers'
+gem 'active_model_serializers', '~> 0.10.4'
 gem 'bcrypt', '~> 3.1.7'
-gem 'jwt'
-gem 'jsonapi-serializers'
+gem 'jwt', '~> 1.5.6'
+gem 'jsonapi-serializers', '~> 0.16.1'
 
 # gem 'rack-cors'
 
