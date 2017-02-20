@@ -7,6 +7,7 @@ end
 
 gem 'active_model_serializers', '~> 0.10.4'
 gem 'bcrypt', '~> 3.1.7'
+gem 'foreman', '~> 0.83.0'
 gem 'jsonapi-serializers', '~> 0.16.1'
 gem 'jwt', '~> 1.5.6'
 gem 'mysql2', '~> 0.4.5'

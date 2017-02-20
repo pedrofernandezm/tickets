@@ -18,7 +18,7 @@ module ResponseHandler
   end
 
   def render_unauthorized
-    render_error([{detail: "Unauthorized", status: 401}], 401)
+    render_errors([{detail: "Unauthorized", status: 401}], 401)
   end
 
   def render_json(resources, status: 200)
