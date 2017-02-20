@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default function TicketsIndex({ text }){
+export default class TicketsIndex extends Component{
 
-  return(
-    <h1>{ text }</h1>
-  );
+  componentDidMount(){
+    this.props.getTickets();
+  }
+
+  render(){
+    return(
+        <h1>{ this.props.text }</h1>
+    );
+  }
 
 }

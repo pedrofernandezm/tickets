@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
 
   include ResponseHandler
 
-  before_action :authenticate_token!
+  # before_action :authenticate_token!
 
   protected
 
