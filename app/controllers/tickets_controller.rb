@@ -11,17 +11,13 @@ class TicketsController < ApplicationController
   end
 
   def create
-    ticket = current_user.tickets.create(ticket_params)
-    if ticket.save
-      render json: ticket, status: :created
-    else
-      render_error(ticket, :unprocessable_entity)
-    end
+    ticket = current_user.tickets.create!(ticket_params)
+    render json: ticket, status: :created
   end
 
   private
 
   def ticket_params
-    params.permit(:subject, :desciption)
+    params.permit(:subject, :description)
   end
 end

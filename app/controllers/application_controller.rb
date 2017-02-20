@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
 
-  include ErrorHandler
+  include ResponseHandler
 
   before_action :authenticate_token!
 
@@ -20,6 +20,12 @@ class ApplicationController < ActionController::API
     else
       session_manager.refresh!
     end
+  end
+
+  def current_user
+    session_manager.session.user
+  rescue => e
+    nil
   end
 
 end
