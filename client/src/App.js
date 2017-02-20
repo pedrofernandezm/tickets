@@ -6,15 +6,14 @@ import LoginFormContainer from './components/LoginForm/LoginFormContainer.js';
 
 class App extends Component {
   state = {
-    text: "hola"
+    tickets: []
   }
 
   getTickets = () => {
-  return axios.get('/api/tickets', { headers: {'Content-Type': 'application/json'} })
+    return axios.get('/api/tickets', { headers: {'Content-Type': 'application/json'} } )
       .then((response) => {
         this.setState({
-          pokemonList: response.data.results,
-          loadingList: false
+          tickets: response.data
         });
       });
   }

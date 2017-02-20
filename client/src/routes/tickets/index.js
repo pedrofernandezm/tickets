@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TicketsList from '../../components/TicketsList/TicketsList.js'
 
 export default class TicketsIndex extends Component{
 
@@ -8,7 +9,10 @@ export default class TicketsIndex extends Component{
 
   render(){
     return(
-        <h1>{ this.props.text }</h1>
+      <div>
+        <h1>Tickets</h1>
+        <TicketsList />
+      </div>
     );
   }
 
