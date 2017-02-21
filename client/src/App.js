@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import axios from 'axios';
-import LoginFormContainer from './components/LoginForm/LoginFormContainer.js';
 
 class App extends Component {
   state = {
@@ -13,7 +10,7 @@ class App extends Component {
     return axios.get('/api/tickets', { headers: {'Content-Type': 'application/json'} } )
       .then((response) => {
         this.setState({
-          tickets: response.data
+          tickets: response.data.data
         });
       });
   }

@@ -11,7 +11,7 @@ export default class TicketsIndex extends Component{
     return(
       <div>
         <h1>Tickets</h1>
-        <TicketsList />
+        <TicketsList tickets={this.props.tickets} />
       </div>
     );
   }
