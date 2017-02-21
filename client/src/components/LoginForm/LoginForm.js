@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function LoginForm({ onFormSubmit, onInputChange, emailInputValue, passwordInputValue }) {
+export default function LoginForm({ onSubmitForm, onInputChange, emailInputValue, passwordInputValue }) {
   return(
-    <form action="" onSubmit={onFormSubmit}>
+    <form action="" onSubmit={onSubmitHandler}>
       <div>
         <label htmlFor="email">Email</label>
         <input name="emailInputValue" onChange={onInputChange} value={emailInputValue} id="email" type="text" />
@@ -14,4 +14,9 @@ export default function LoginForm({ onFormSubmit, onInputChange, emailInputValue
       <button>Sign in</button>
     </form>
   );
+
+  function onSubmitHandler(event){
+    event.preventDefault();
+    onSubmitForm(emailInputValue, passwordInputValue);
+  }
 }

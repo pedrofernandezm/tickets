@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::API
+
   include ResponseHandler
 
-  # before_action :authenticate_token!
+  before_action :authenticate_token!
 
   protected
 
@@ -15,7 +16,7 @@ class ApplicationController < ActionController::API
 
   def authenticate_token!
     unless authorization_token.present? && session_manager.valid?
-      render_unauthorized
+      raise ApiExceptions::AuthenticationError.new
     else
       session_manager.refresh!
     end

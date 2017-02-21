@@ -1,12 +1,12 @@
 import React from 'react';
-import LoginForm from '../../components/LoginForm/LoginForm.js';
+import LoginFormContainer from '../../components/LoginForm/LoginFormContainer.js';
 
-export default function LoginPage(){
+export default function LoginPage({ login }){
 
   return(
     <div>
       <h1>Sign in</h1>
-      <LoginForm />
+      <LoginFormContainer onSubmitForm={ login }/>
     </div>
   );
 

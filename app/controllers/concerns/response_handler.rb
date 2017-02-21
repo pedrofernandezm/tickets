@@ -15,10 +15,10 @@ module ResponseHandler
       render_errors([{detail: e.to_s, status: 422}], 422)
     end
 
-  end
+    rescue_from ApiExceptions::BaseError do |e|
+      render_errors([{detail: e.message, status: e.status}], e.status)
+    end
 
-  def render_unauthorized
-    render_errors([{detail: "Unauthorized", status: 401}], 401)
   end
 
   def render_json(resources, status: 200)

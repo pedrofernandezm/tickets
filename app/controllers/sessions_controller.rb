@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_token!, only: :create
 
   def create
-    access_token = session_manager.create!(session_params)
+    access_token = session_manager.create!(session_params[:session])
     render json: access_token
   end
 
@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
   private
 
   def session_params
-    params.permit(:email, :password)
+    params.permit(session: [:email, :password])
   end
 
 end

@@ -53,7 +53,7 @@ class SessionManager
   end
 
   def authenticate_user!(params)
-    user.authenticate(params[:password]) || raise(StandardError.new("Authentication failed"))
+    (user && user.authenticate(params[:password])) || raise(ApiExceptions::AuthenticationError.new)
   end
 
   def user

@@ -3,8 +3,8 @@ import LoginForm from './LoginForm.js';
 
 export default class LoginFormContainer extends Component {
   state = {
-    emailInputValue: '',
-    passwordInputValue: ''
+    emailInputValue: 'ronaldo@buckridge.com',
+    passwordInputValue: 'Password1!'
   }
 
   onInputChange(event) {
@@ -21,7 +21,12 @@ export default class LoginFormContainer extends Component {
 
   render() {
     return (
-      <LoginForm onFormSubmit={this.onFormSubmit.bind(this)} onInputChange={this.onInputChange.bind(this)} emailInputValue={this.state.emailInputValue} passwordInputValue={this.state.passwordInputValue} />
+      <LoginForm
+        onSubmitForm={this.props.onSubmitForm}
+        onInputChange={this.onInputChange.bind(this)}
+        emailInputValue={this.state.emailInputValue}
+        passwordInputValue={this.state.passwordInputValue}
+      />
     );
   }
 }
