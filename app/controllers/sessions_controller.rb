@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     render json: session_manager.session
   end
 
-  private
+  protected
 
   def session_params
     params.permit(session: [:email, :password])

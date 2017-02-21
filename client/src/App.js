@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { local } from 'storage.io';
+import { browserHistory } from 'react-router';
+import './App.css';
 
 class App extends Component {
 
@@ -9,17 +11,37 @@ class App extends Component {
     tickets: [],
     session: {
       token: "",
-      expiresAt: ""
+      expiresAt: "",
+      userType: ""
     }
   }
 
+  requestHeaders = {
+    'Content-Type': 'application/json',
+    'Authentication': this.getToken()
+  }
+
+  getToken(){
+    return local.get('token');
+  }
+
   getTickets = () => {
-    return axios.get('/api/tickets', { headers: {'Content-Type': 'application/json'} } )
+    return axios.get('/api/tickets', { headers: this.requestHeaders } )
       .then((response) => {
         this.setState({
           tickets: response.data.data
         });
-      });
+      })
+  }
+
+  loggedIn = () => {
+    var token = local.get('token');
+    if ( Boolean(token) ) {
+      var expirationTime = new Date(local.get('expiresAt'));
+      var currentTime = new Date();
+      return expirationTime > currentTime;
+    }
+    return false;
   }
 
   login = (email, password) => {
@@ -31,30 +53,30 @@ class App extends Component {
     ).then((response) => {
       var data = response.data.data.attributes
       var session = jwtDecode(data['access-token']);
-      var token = session['token'];
-      var expiresAt = session['expires_at'];
+      var token = session.token;
+      var expiresAt = session.expiresAt;
+      var userType = session.type;
       local.set('token', token);
       local.set('expiresAt', expiresAt);
-      this.setState({
-        session: {
-          token: token,
-          expiresAt: expiresAt
-        }
-      });
+      local.set('userType', userType);
+      browserHistory.push('/agents/tickets');
     });
   }
 
   componentWillMount() {
-    this.setState({
-      session: {
-        token: local.get('token'),
-        expiresAt: local.get('expiresAt')
-      }
-    });
+    if(!this.loggedIn()){
+    }else{
+      this.setState({
+        session: {
+          token: local.get('token'),
+          expiresAt: local.get('expiresAt'),
+          userType: local.get('userType')
+        }
+      });
+    }
   }
 
   render() {
-    console.log(this.state);
     var propsObject = Object.assign(
       {},
       this.state,

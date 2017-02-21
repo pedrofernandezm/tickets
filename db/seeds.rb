@@ -1,7 +1,14 @@
 ticket_states = %w(opened pending resolved closed)
 
 3.times do
-  User.create(
+  Customer.create(
+    email: Faker::Internet.email,
+    password: "Password1!"
+  )
+end
+
+3.times do
+  Agent.create(
     email: Faker::Internet.email,
     password: "Password1!"
   )
@@ -11,7 +18,7 @@ end
   Ticket.create(
     subject: Faker::Lorem.sentence,
     description: Faker::Lorem.paragraph,
-    user_id: User.all.sample.id,
+    user_id: Customer.all.sample.id,
     aasm_state: ticket_states.sample
   )
 end

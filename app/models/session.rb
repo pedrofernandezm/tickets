@@ -11,7 +11,7 @@ class Session < ApplicationRecord
   validates :expires_at, presence: true
 
   def access_token
-    Token.encode(user_id: user_id, token: token, expires_at: expires_at)
+    Token.encode(userId: user_id, token: token, expiresAt: expires_at, type: user.type)
   end
 
 end

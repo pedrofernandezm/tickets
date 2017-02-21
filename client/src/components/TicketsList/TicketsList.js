@@ -13,6 +13,8 @@ export default function TicketsList({ tickets }){
         return 'success';
       case 'solved':
         return 'default';
+      default:
+        return 'default';
     }
   }
 
