@@ -1,7 +1,7 @@
 class TicketsController < ApplicationController
 
   def index
-    @tickets = Ticket.all
+    @tickets = user_class.tickets
     render json: @tickets
   end
 
@@ -19,5 +19,9 @@ class TicketsController < ApplicationController
 
   def ticket_params
     params.permit(:subject, :description)
+  end
+
+  def user_class
+    @user_class ||= params[:user_type].classify.constantize
   end
 end

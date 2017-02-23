@@ -71,16 +71,13 @@ class App extends Component {
   }
 
   componentWillMount() {
-    if(!this.loggedIn()){
-    }else{
-      this.setState({
-        session: {
-          token: local.get('token'),
-          expiresAt: local.get('expires-at'),
-          userType: local.get('user-type')
-        }
-      });
-    }
+    this.setState({
+      session: {
+        token: local.get('token'),
+        expiresAt: local.get('expires-at'),
+        userType: local.get('user-type')
+      }
+    });
   }
 
   render() {
