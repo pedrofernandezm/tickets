@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import { local } from 'storage.io';
 import { browserHistory } from 'react-router';
 import './App.css';
@@ -18,15 +17,23 @@ class App extends Component {
 
   requestHeaders = {
     'Content-Type': 'application/json',
-    'Authentication': this.getToken()
+    'Authorization': this.getToken()
   }
 
   getToken(){
-    return local.get('token');
+    var token = local.get('token');
+    if(token){
+      return `Bearer ${token}`;
+    }
+    return '';
   }
 
-  getTickets = () => {
-    return axios.get('/api/tickets', { headers: this.requestHeaders } )
+  getAgentTickets = () => {
+    this.getTickets('/api/agents/tickets');
+  }
+
+  getTickets = (url) => {
+    return axios.get(url, { headers: this.requestHeaders } )
       .then((response) => {
         this.setState({
           tickets: response.data.data
@@ -37,7 +44,7 @@ class App extends Component {
   loggedIn = () => {
     var token = local.get('token');
     if ( Boolean(token) ) {
-      var expirationTime = new Date(local.get('expiresAt'));
+      var expirationTime = new Date(local.get('expires-at'));
       var currentTime = new Date();
       return expirationTime > currentTime;
     }
@@ -51,14 +58,14 @@ class App extends Component {
         session: { email: email, password: password }
       }
     ).then((response) => {
-      var data = response.data.data.attributes
-      var session = jwtDecode(data['access-token']);
-      var token = session.token;
-      var expiresAt = session.expiresAt;
-      var userType = session.type;
+      var data = response.data.data;
+      var session = data.attributes;
+      var token = session['access-token'];
+      var expiresAt = session['expires-at'];
+      var userType = data.relationships.user.data.type;
       local.set('token', token);
-      local.set('expiresAt', expiresAt);
-      local.set('userType', userType);
+      local.set('expires-at', expiresAt);
+      local.set('user-type', userType);
       browserHistory.push('/agents/tickets');
     });
   }
@@ -69,8 +76,8 @@ class App extends Component {
       this.setState({
         session: {
           token: local.get('token'),
-          expiresAt: local.get('expiresAt'),
-          userType: local.get('userType')
+          expiresAt: local.get('expires-at'),
+          userType: local.get('user-type')
         }
       });
     }
@@ -81,7 +88,7 @@ class App extends Component {
       {},
       this.state,
       {
-        getTickets: this.getTickets,
+        getAgentTickets: this.getAgentTickets,
         login: this.login
       }
     );

@@ -21,8 +21,8 @@ module ResponseHandler
 
   end
 
-  def render_json(resources, status: 200)
-    render json: JSONAPI::Serializer. serialize(resource), status: status
+  def render_json(resource, status: 200)
+    render json: JSONAPI::Serializer.serialize(resource), status: status
   end
 
   private

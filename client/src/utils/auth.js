@@ -7,7 +7,7 @@ module.exports = {
   loggedIn(){
     var token = local.get('token');
     if ( Boolean(token) ) {
-      var expirationTime = new Date(local.get('expiresAt'));
+      var expirationTime = new Date(local.get('expires-at'));
       var currentTime = new Date();
       return expirationTime > currentTime;
     }

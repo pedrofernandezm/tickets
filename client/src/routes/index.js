@@ -27,7 +27,7 @@ export default function getRoutes() {
   );
 
   function checkAuthentication(nextState, replace){
-    if(location.pathname != "/login" && !auth.loggedIn()){
+    if(location.pathname !== "/login" && !auth.loggedIn()){
       replace({
         state: nextState,
         pathname: "/login"
