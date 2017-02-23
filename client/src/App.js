@@ -3,6 +3,7 @@ import axios from 'axios';
 import { local } from 'storage.io';
 import { browserHistory } from 'react-router';
 import './App.css';
+import AlertContainer from 'react-alert';
 
 class App extends Component {
 
@@ -12,6 +13,13 @@ class App extends Component {
       token: "",
       expiresAt: "",
       userType: ""
+    },
+    alertOptions: {
+      offset: 14,
+      position: 'top right',
+      theme: 'dark',
+      time: 3000,
+      transition: 'fade'
     }
   }
 
@@ -28,11 +36,9 @@ class App extends Component {
     return '';
   }
 
-  getAgentTickets = () => {
-    this.getTickets('/api/agents/tickets');
-  }
-
-  getTickets = (url) => {
+  getTickets = () => {
+    var userType = local.get('user-type');
+    var url = `/api/${userType}/tickets`
     return axios.get(url, { headers: this.requestHeaders } )
       .then((response) => {
         this.setState({
@@ -66,7 +72,30 @@ class App extends Component {
       local.set('token', token);
       local.set('expires-at', expiresAt);
       local.set('user-type', userType);
-      browserHistory.push('/agents/tickets');
+      browserHistory.push('/tickets');
+      this.msg.success('Signed in successfully');
+    });
+  }
+
+  removeSessionAndRedirect = () => {
+    local.remove('token');
+    local.remove('expires-at');
+    local.remove('user-type');
+    browserHistory.push('/login');
+  }
+
+  createTicket = (subject, description) => {
+    return axios.post(
+      '/api/customers/tickets',
+      {
+        ticket: { subject: subject, description: description }
+      },
+      {
+        headers: this.requestHeaders
+      }
+    ).then((response) => {
+      this.msg.success("Ticket created successfully");
+      browserHistory.push('/tickets');
     });
   }
 
@@ -85,13 +114,15 @@ class App extends Component {
       {},
       this.state,
       {
-        getAgentTickets: this.getAgentTickets,
-        login: this.login
+        getTickets: this.getTickets,
+        login: this.login,
+        createTicket: this.createTicket
       }
     );
     return (
       <div className="App container">
         <div className="row">
+          <AlertContainer ref={a => this.msg = a} {...this.state.alertOptions} />
           { React.cloneElement(this.props.children, propsObject) }
         </div>
       </div>

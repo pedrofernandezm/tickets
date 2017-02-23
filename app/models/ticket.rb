@@ -20,7 +20,9 @@ class Ticket < ApplicationRecord
 
   has_secure_token :uuid
 
-  belongs_to :user
+  belongs_to :customer
+
+  has_many :replies
 
   validates :subject, presence: true
   validates :description, presence: true

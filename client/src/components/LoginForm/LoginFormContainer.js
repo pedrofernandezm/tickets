@@ -3,8 +3,8 @@ import LoginForm from './LoginForm.js';
 
 export default class LoginFormContainer extends Component {
   state = {
-    emailInputValue: 'pasquale_windler@westmoore.biz',
-    passwordInputValue: 'Password1!'
+    emailInputValue: 'customer@tickets.com',
+    passwordInputValue: 'Secret!'
   }
 
   onInputChange(event) {
@@ -12,11 +12,6 @@ export default class LoginFormContainer extends Component {
     this.setState({
       [name]: event.target.value
     });
-  }
-
-  onFormSubmit(event){
-    event.preventDefault();
-    alert(JSON.stringify(this.state));
   }
 
   render() {
