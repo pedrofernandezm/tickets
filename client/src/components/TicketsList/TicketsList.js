@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, Label } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 export default function TicketsList({ tickets }){
 
@@ -30,7 +31,7 @@ export default function TicketsList({ tickets }){
       <tbody>
         { tickets.map(item =>
           <tr key={item.id}>
-            <td>{item.attributes.subject}</td>
+            <td><Link to={`/tickets/${item.id}`}>{item.attributes.subject}</Link></td>
             <td>{item.attributes['created-at']}</td>
             <td><Label bsStyle={ labelState(item.attributes['aasm-state']) }>{item.attributes['aasm-state']}</Label></td>
           </tr>) }

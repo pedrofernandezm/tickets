@@ -9,6 +9,12 @@ class App extends Component {
 
   state = {
     tickets: [],
+    ticket: {
+      attributes: {
+        subject: "",
+        description: ""
+      }
+    },
     session: {
       token: "",
       expiresAt: "",
@@ -26,6 +32,17 @@ class App extends Component {
   requestHeaders = {
     'Content-Type': 'application/json',
     'Authorization': this.getToken()
+  }
+
+  getTicket = (id) => {
+    var url = `/api/${this.state.session.userType}/tickets/${id}`;
+    return axios.get(url, { headers: this.requestHeaders } )
+      .then((response) => {
+        console.log(response.data);
+        this.setState({
+          ticket: response.data.data
+        });
+      })
   }
 
   getToken(){
@@ -115,6 +132,7 @@ class App extends Component {
       this.state,
       {
         getTickets: this.getTickets,
+        getTicket: this.getTicket,
         login: this.login,
         createTicket: this.createTicket
       }
