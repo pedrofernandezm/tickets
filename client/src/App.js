@@ -93,8 +93,10 @@ class App extends Component {
       }
     );
     return (
-      <div className="App">
-        { React.cloneElement(this.props.children, propsObject) }
+      <div className="App container">
+        <div className="row">
+          { React.cloneElement(this.props.children, propsObject) }
+        </div>
       </div>
     );
   }

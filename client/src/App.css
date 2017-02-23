@@ -12,3 +12,7 @@
   width: 300px;
   padding-top: 100px;
 }
+
+.tickets-table .label{
+  display: block;
+}

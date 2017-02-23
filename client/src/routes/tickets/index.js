@@ -4,9 +4,7 @@ import TicketsList from '../../components/TicketsList/TicketsList.js'
 export default class TicketsIndex extends Component{
 
   componentDidMount(){
-    if(location.pathname === "/agents/tickets"){
-      this.props.getAgentTickets();
-    }
+    this.props.getAgentTickets();
   }
 
   render(){

@@ -19,7 +19,7 @@ export default function TicketsList({ tickets }){
   }
 
   return(
-    <Table striped bordered condensed hover>
+    <Table striped bordered condensed hover className="tickets-table">
       <thead>
         <tr>
           <th>Subject</th>
