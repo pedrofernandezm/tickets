@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Ticket from '../../components/Ticket'
+import Ticket from '../../components/Ticket';
+import RepliesList from '../../components/Reply/RepliesList.js';
 
 export default class ShowTicket extends Component{
 
@@ -11,8 +12,10 @@ export default class ShowTicket extends Component{
     return(
       <div className="ticket-page">
         <Ticket ticket={this.props.ticket} />
+        <RepliesList replies={this.props.replies} />
       </div>
     );
   }
+
 
 }

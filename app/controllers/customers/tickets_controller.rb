@@ -7,7 +7,7 @@ class Customers::TicketsController < ApplicationController
 
   def show
     @ticket = current_user.tickets.find_by!(uuid: params[:id])
-    render json: @ticket
+    render json: @ticket, include: 'replies'
   end
 
   def create

@@ -15,6 +15,7 @@ class App extends Component {
         description: ""
       }
     },
+    replies: [],
     session: {
       token: "",
       expiresAt: "",
@@ -38,9 +39,19 @@ class App extends Component {
     var url = `/api/${this.state.session.userType}/tickets/${id}`;
     return axios.get(url, { headers: this.requestHeaders } )
       .then((response) => {
-        console.log(response.data);
+        this.getReplies(id);
         this.setState({
           ticket: response.data.data
+        });
+      })
+  }
+
+  getReplies = (ticketId) => {
+    var url = `/api/tickets/${ticketId}/replies`;
+    return axios.get(url, { headers: this.requestHeaders } )
+      .then((response) => {
+        this.setState({
+          replies: response.data.data
         });
       })
   }
