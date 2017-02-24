@@ -10,6 +10,7 @@
     "axios": "^0.15.3",
     "bootstrap": "3",
     "jwt-decode": "^2.1.0",
+    "moment": "^2.17.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-alert": "^1.0.14",
