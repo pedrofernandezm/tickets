@@ -1,43 +1,57 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import AlertContainer from 'react-alert';
 import { local } from 'storage.io';
 import { browserHistory } from 'react-router';
+import auth from './utils/auth.js';
+
 import './App.css';
-import AlertContainer from 'react-alert';
+
+import NavBar from './components/NavBar';
 
 class App extends Component {
 
-  state = {
-    tickets: [],
-    ticket: {
-      attributes: {
-        subject: "",
-        description: ""
+  constructor(){
+    super();
+
+    this.state = {
+      tickets: [],
+      ticket: {
+        attributes: {
+          subject: "",
+          description: ""
+        }
+      },
+      replies: [],
+      session: {
+        token: "",
+        expiresAt: "",
+        userType: ""
+      },
+      user: {
+        email: ''
+      },
+      alertOptions: {
+        offset: 14,
+        position: 'top right',
+        theme: 'dark',
+        time: 3000,
+        transition: 'fade'
       }
-    },
-    replies: [],
-    session: {
-      token: "",
-      expiresAt: "",
-      userType: ""
-    },
-    alertOptions: {
-      offset: 14,
-      position: 'top right',
-      theme: 'dark',
-      time: 3000,
-      transition: 'fade'
     }
+    this.getTickets = this.getTickets.bind(this);
   }
 
-  requestHeaders = {
-    'Content-Type': 'application/json',
-    'Authorization': this.getToken()
+  requestHeaders(){
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': this.getToken()
+    }
   }
 
   getTicket = (id) => {
     var url = `/api/${this.state.session.userType}/tickets/${id}`;
-    return axios.get(url, { headers: this.requestHeaders } )
+    return axios.get(url, { headers: this.requestHeaders() } )
       .then((response) => {
         this.getReplies(id);
         this.setState({
@@ -48,7 +62,7 @@ class App extends Component {
 
   getReplies = (ticketId) => {
     var url = `/api/tickets/${ticketId}/replies`;
-    return axios.get(url, { headers: this.requestHeaders } )
+    return axios.get(url, { headers: this.requestHeaders() } )
       .then((response) => {
         this.setState({
           replies: response.data.data
@@ -57,17 +71,17 @@ class App extends Component {
   }
 
   getToken(){
-    var token = local.get('token');
+    var token = this.state.session.token;
     if(token){
       return `Bearer ${token}`;
     }
     return '';
   }
 
-  getTickets = () => {
-    var userType = local.get('user-type');
+  getTickets(){
+    var userType = this.state.session.userType;
     var url = `/api/${userType}/tickets`
-    return axios.get(url, { headers: this.requestHeaders } )
+    return axios.get(url, { headers: this.requestHeaders() } )
       .then((response) => {
         this.setState({
           tickets: response.data.data
@@ -88,29 +102,44 @@ class App extends Component {
   login = (email, password) => {
     return axios.post(
       '/api/sessions',
-      { headers: {'Content-Type': 'application/json'},
-        session: { email: email, password: password }
-      }
+      { session: { email: email, password: password } },
+      { headers: this.requestHeaders() }
     ).then((response) => {
       var data = response.data.data;
+      var user = response.data.included[0];
       var session = data.attributes;
       var token = session['access-token'];
       var expiresAt = session['expires-at'];
       var userType = data.relationships.user.data.type;
-      local.set('token', token);
-      local.set('expires-at', expiresAt);
-      local.set('user-type', userType);
+      auth.storeSession(token, expiresAt, userType, user.attributes.email);
+      this.setState(auth.loadSession());
       browserHistory.push('/tickets');
       this.msg.success('Signed in successfully');
     });
   }
 
-  removeSessionAndRedirect = () => {
-    local.remove('token');
-    local.remove('expires-at');
-    local.remove('user-type');
+  logout = (event) => {
+    event.preventDefault();
+    auth.removeSession();
+    this.setState(auth.unloadSession());
+    this.msg.success('Sign out successfully');
     browserHistory.push('/login');
   }
+
+  closeTicket = (ticketId) => {
+    var url = `/api/${this.state.session.userType}/tickets/${ticketId}/close`;
+    return axios.post(
+      url,
+      { },
+      { headers: this.requestHeaders() }
+    ).then((response) => {
+      this.setState({
+        ticket: response.data.data
+      });
+      this.msg.success('Ticket closed successfully');
+    });
+  }
+
 
   createTicket = (subject, description) => {
     return axios.post(
@@ -119,7 +148,7 @@ class App extends Component {
         ticket: { subject: subject, description: description }
       },
       {
-        headers: this.requestHeaders
+        headers: this.requestHeaders()
       }
     ).then((response) => {
       this.msg.success("Ticket created successfully");
@@ -127,14 +156,29 @@ class App extends Component {
     });
   }
 
-  componentWillMount() {
-    this.setState({
-      session: {
-        token: local.get('token'),
-        expiresAt: local.get('expires-at'),
-        userType: local.get('user-type')
+  createReply = (ticketId, message) => {
+    var url = `/api/tickets/${ticketId}/replies`;
+    return axios.post(
+      url,
+      {
+        reply: { message: message }
+      },
+      {
+        headers: this.requestHeaders()
       }
+    ).then((response) => {
+      this.msg.success("Reply sent successfully");
+      var reply = response.data.data;
+      var newReplies = this.state.replies.concat([reply]);
+
+      this.setState({
+        replies: newReplies
+      });
     });
+  }
+
+  componentWillMount() {
+    this.setState(auth.loadSession());
   }
 
   render() {
@@ -144,15 +188,20 @@ class App extends Component {
       {
         getTickets: this.getTickets,
         getTicket: this.getTicket,
+        closeTicket: this.closeTicket,
         login: this.login,
-        createTicket: this.createTicket
+        createTicket: this.createTicket,
+        createReply: this.createReply
       }
     );
     return (
-      <div className="App container">
-        <div className="row">
-          <AlertContainer ref={a => this.msg = a} {...this.state.alertOptions} />
-          { React.cloneElement(this.props.children, propsObject) }
+      <div>
+        <NavBar user={this.state.user} onLogoutHandler={this.logout} />
+        <div className="App container">
+          <div className="row">
+            <AlertContainer ref={a => this.msg = a} {...this.state.alertOptions} />
+            { React.cloneElement(this.props.children, propsObject) }
+          </div>
         </div>
       </div>
     );

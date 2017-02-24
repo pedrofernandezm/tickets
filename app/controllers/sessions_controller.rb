@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 
   def create
     session = session_manager.create!(session_params[:session])
-    render json: session
+    render json: session, include: "user"
   end
 
   def show

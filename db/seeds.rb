@@ -1,14 +1,14 @@
 ticket_states = %w(opened pending resolved closed)
 password = "Secret!"
 
-3.times do
+2.times do
   Customer.create(
     email: Faker::Internet.email,
     password: password
   )
 end
 
-3.times do
+2.times do
   Agent.create(
     email: Faker::Internet.email,
     password: password
@@ -25,7 +25,7 @@ Customer.create(
   password: password
 )
 
-10.times do
+20.times do
   Ticket.create(
     subject: Faker::Lorem.sentence,
     description: Faker::Lorem.paragraph,

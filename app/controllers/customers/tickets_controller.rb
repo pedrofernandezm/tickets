@@ -1,5 +1,7 @@
 class Customers::TicketsController < ApplicationController
 
+  include TicketOperations
+
   def index
     @tickets = current_user.tickets
     render json: @tickets
@@ -7,7 +9,7 @@ class Customers::TicketsController < ApplicationController
 
   def show
     @ticket = current_user.tickets.find_by!(uuid: params[:id])
-    render json: @ticket, include: 'replies'
+    render json: @ticket
   end
 
   def create

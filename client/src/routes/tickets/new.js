@@ -1,5 +1,5 @@
 import React from 'react';
-import TicketForm from './TicketForm.js';
+import TicketForm from '../../components/Ticket/TicketForm.js';
 
 export default function NewTicket({ createTicket }) {
   return(

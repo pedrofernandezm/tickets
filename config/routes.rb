@@ -7,11 +7,15 @@ Rails.application.routes.draw do
     end
 
     namespace :agents do
-      resources :tickets, only: [:index, :show, :solve]
+      resources :tickets, only: [:index, :show] do
+        post :close
+      end
     end
 
     namespace :customers do
-      resources :tickets, only: [:index, :create, :show, :solve]
+      resources :tickets, only: [:index, :create, :show] do
+        post :close
+      end
     end
   end
 end

@@ -6,7 +6,7 @@ class RepliesController < ApplicationController
   end
 
   def create
-    @reply = ticket.replies.create(reply_params[:reply]).merge(user_id: current_user.id)
+    @reply = ticket.replies.create!(reply_params[:reply].merge(user_id: current_user.id))
     render json: @reply
   end
 

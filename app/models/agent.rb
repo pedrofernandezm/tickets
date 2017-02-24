@@ -1,6 +1,7 @@
 class Agent < User
 
-  def self.tickets
+  def tickets
     Ticket.all
   end
+
 end

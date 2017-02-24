@@ -3,18 +3,10 @@ class Ticket < ApplicationRecord
 
   aasm do
     state :opened, initial: true
-    state :pending, :resolved, :closed
-
-    event :pend do
-      transitions from: :open, to: :pending
-    end
-
-    event :resolve do
-      transitions from: :pending, to: :resolved
-    end
+    state :closed
 
     event :close do
-      transitions from: :resolved, to: :closed
+      transitions from: :opened, to: :closed
     end
   end
 

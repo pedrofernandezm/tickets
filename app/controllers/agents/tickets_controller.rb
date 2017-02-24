@@ -1,5 +1,7 @@
 class Agents::TicketsController < ApplicationController
 
+  include TicketOperations
+
   def index
     @tickets = Ticket.all
     render json: @tickets
