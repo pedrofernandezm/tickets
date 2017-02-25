@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
 
-  # include ResponseHandler
+  include ResponseHandler
 
   before_action :authenticate_token!
 
