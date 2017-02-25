@@ -12,7 +12,7 @@ export default function LoginForm({ onSubmitForm, onInputChange, emailInputValue
         <ControlLabel htmlFor="password">Password</ControlLabel>
         <FormControl name="passwordInputValue" onChange={onInputChange} value={passwordInputValue} id="password" type="password" />
       </FormGroup>
-      <Button type="submit">Sign in</Button>
+      <Button bsStyle="primary" type="submit">Sign in</Button>
     </form>
   );
 

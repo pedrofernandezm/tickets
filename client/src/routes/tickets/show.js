@@ -21,6 +21,11 @@ export default class ShowTicket extends Component{
         { this.openedTicket() &&
           <ReplyForm onCloseTicket={this.props.closeTicket} ticket={this.props.ticket} onSubmitForm={this.props.createReply} />
         }
+        { !this.openedTicket() &&
+          <div className="alert alert-warning" role="alert">
+            <p>This ticket is closed</p>
+          </div>
+        }
       </div>
     );
   }

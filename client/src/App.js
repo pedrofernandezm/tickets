@@ -33,7 +33,7 @@ class App extends Component {
       },
       alertOptions: {
         offset: 14,
-        position: 'top right',
+        position: 'bottom right',
         theme: 'dark',
         time: 3000,
         transition: 'fade'
@@ -196,10 +196,10 @@ class App extends Component {
     );
     return (
       <div>
+        <AlertContainer ref={a => this.msg = a} {...this.state.alertOptions} />
         <NavBar user={this.state.user} onLogoutHandler={this.logout} />
         <div className="App container">
           <div className="row">
-            <AlertContainer ref={a => this.msg = a} {...this.state.alertOptions} />
             { React.cloneElement(this.props.children, propsObject) }
           </div>
         </div>
