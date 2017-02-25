@@ -1,4 +1,4 @@
-ticket_states = %w(opened pending resolved closed)
+ticket_states = %w(opened closed)
 password = "Secret!"
 
 Admin.create(

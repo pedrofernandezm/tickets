@@ -21,12 +21,20 @@ gem 'rails', '~> 5.0.1'
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'faker'
+  gem 'rspec-rails', '~> 3.5.2'
 end
 
 group :development do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  gem 'database_cleaner', '~> 1.5.3'
+  gem 'factory_girl_rails', '~> 4.8'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
