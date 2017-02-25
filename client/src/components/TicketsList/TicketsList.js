@@ -8,12 +8,6 @@ export default function TicketsList({ tickets }){
     switch(state){
       case 'opened':
         return 'danger';
-      case 'pending':
-        return 'warning';
-      case 'resolved':
-        return 'success';
-      case 'solved':
-        return 'default';
       default:
         return 'default';
     }

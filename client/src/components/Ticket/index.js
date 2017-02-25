@@ -6,7 +6,7 @@ export default function Ticket ({ ticket }) {
     <div className="panel panel-primary">
       <div className="panel-heading">
         <div className="panel-title">
-          <h4>{ ticket.attributes.subject }</h4>
+          <h4 className="subject">{ ticket.attributes.subject }</h4>
         </div>
       </div>
       <div className="panel-body">
