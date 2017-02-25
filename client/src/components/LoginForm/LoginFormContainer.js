@@ -3,8 +3,8 @@ import LoginForm from './LoginForm.js';
 
 export default class LoginFormContainer extends Component {
   state = {
-    emailInputValue: 'customer@tickets.com',
-    passwordInputValue: 'Secret!'
+    emailInputValue: '',
+    passwordInputValue: ''
   }
 
   onInputChange(event) {
