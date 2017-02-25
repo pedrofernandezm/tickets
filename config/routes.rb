@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   scope :api do
     resources :sessions, only: [:create, :show, :destroy]
     resources :users

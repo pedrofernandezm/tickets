@@ -1,6 +1,11 @@
 ticket_states = %w(opened pending resolved closed)
 password = "Secret!"
 
+Admin.create(
+  email: "admin@tickets.com",
+  password: password
+)
+
 2.times do
   Customer.create(
     email: Faker::Internet.email,
