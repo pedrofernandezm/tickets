@@ -1,6 +1,10 @@
 class SessionSerializer < ActiveModel::Serializer
-  attributes :access_token, :expires_at
+  attributes :id, :access_token, :expires_at
 
   belongs_to :user
+
+  def id
+    object.uuid
+  end
 
 end
