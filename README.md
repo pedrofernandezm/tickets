@@ -1,24 +1,44 @@
 # Tickets
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Install requirements
 
-Things you may want to cover:
+- Node: `brew install node`
+- Yarn: `brew install yarn`
+- MySQL: `brew install mysql && brew services start mysql`
 
-* Ruby version
+## Install dependencies
 
-* System dependencies
+### Server (Rails)
 
-* Configuration
+`bundle install`
 
-* Database creation
+### Client (React)
 
-* Database initialization
+`cd client && yarn install`
 
-* How to run the test suite
+## Initialize database
 
-* Services (job queues, cache servers, search engines, etc.)
+`bundle exec rake db:setup`
 
-* Deployment instructions
+## Run the code base
 
-* ...
+`foreman start -p 3000`
+
+### Accesing via the web browser
+
+| Portal | URL | Email | Password |
+|--------|-----|-------|----------|
+| Customer |[http://localhost:3000](http://localhost:3000)| `customer@tickets.com` | `Secret!` |
+| Agent |[http://localhost:3000](http://localhost:3000)| `agent@tickets.com` | `Secret!` |
+| API |[http://localhost:3100/api](http://localhost:3100/api)| `customer@tickets.com` | `Secret!` |
+| Admin |[http://localhost:3100/admin](http://localhost:3100/admin)| `admin@tickets.com` | `Secret!` |
+
+## Running tests
+
+### Server
+
+`bundle exec rspec spec`
+
+### Client
+
+`cd client && CI=true yarn test`
